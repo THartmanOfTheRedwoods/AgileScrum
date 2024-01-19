@@ -1,22 +1,26 @@
-name: Label Epic
+name: Label User-Story with Epic
 
 on:
   issues:
-    types:
-      - opened
+    types: [opened]
 
 jobs:
-  label-epic:
+  process_issue:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check if Epic Label Provided
-      id: check_label
-      run: echo "Epic Label :: $(grep -oP '(?<=epic_label: ).*' ${{ github.event.issue.body }} || echo "")"
-      
-    - name: Apply Epic Label
-      if: steps.check_label.outputs.EpicLabel
-      run: |
-        epic_label="$(grep -oP '(?<=epic_label: ).*' ${{ github.event.issue.body }} || echo "")"
-        echo "Applying Epic Label: $epic_label"
-        gh issue add-label "${{ github.event.issue.number }}" "$epic_label"
+      - name: Get issue body
+        run: |
+          echo "Issue body: ${{ github.event.issue.body }}"
+      - name: Extract epic label
+        run: |
+          epic_label=$(echo "${{ github.event.issue.body }}" | grep -oP '(?<=Epic Label:\s)\w+')
+          echo "Epic Label: $epic_label"
+      - name: Add epic label
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addLabels({
+              issue_number: ${{ github.event.issue.number }},
+              labels: ["${epic_label}"]
+            })
