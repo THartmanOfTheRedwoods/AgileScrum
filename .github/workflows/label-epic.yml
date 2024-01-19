@@ -18,7 +18,7 @@ jobs:
       - name: Add epic label
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.WORKFLOW_TOKEN }}
           script: |
             github.issues.addLabels({
               issue_number: ${{ github.event.issue.number }},
