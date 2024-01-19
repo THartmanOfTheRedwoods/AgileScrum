@@ -16,6 +16,7 @@ jobs:
       - name: Get issue body
         run: |
           echo "Issue body: ${{ github.event.issue.body }}"
+      - uses: actions/checkout@v3    
       - name: Apply epic label
         run: |
           epic_label=$(echo "${{ github.event.issue.body }}" | awk -v RS='###' '/Epic Label/ {gsub(/^[[:space:]]*Epic Label[[:space:]]*/, "epic:", $0); gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0); print $0}'"")
