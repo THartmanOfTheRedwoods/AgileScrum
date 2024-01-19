@@ -15,12 +15,7 @@ jobs:
         run: |
           epic_label=$(echo "${{ github.event.issue.body }}" | awk -v RS='###' '/Epic Label/ {gsub(/^[[:space:]]*Epic Label[[:space:]]*/, "epic:", $0); gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0); print $0}'"")
           echo "Epic Label: $epic_label"
-      - name: Add epic label
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.WORKFLOW_TOKEN }}
-          script: |
-            github.issues.addLabels({
-              issue_number: ${{ github.event.issue.number }},
-              labels: ["${epic_label}"]
-            })
+      - name: Apply Epic Label
+        run: |
+          echo "Applying Epic Label: $epic_label"
+          gh issue add-label "${{ github.event.issue.number }}" "$epic_label"
