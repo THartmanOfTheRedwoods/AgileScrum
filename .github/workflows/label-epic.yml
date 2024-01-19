@@ -21,5 +21,5 @@ jobs:
       - name: Add epic label
         run: |
           echo "Applying Epic Label: $epic_label"
-          gh issue add-labels --issue ${{ github.event.issue.number }} --labels "${epic_label}" --token ${{ secrets.WORKFLOW_TOKEN }}
+          gh issue edit ${{ github.event.issue.number }} --add-label "${epic_label}"
           
