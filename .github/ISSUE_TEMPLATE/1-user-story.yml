@@ -4,6 +4,14 @@ title: "[User Story] <title>"
 labels: ["user-story"]
 body:
   - type: input
+    id: epic_label
+    attributes:
+      label: Epic Label
+      description: Create an epic label for this user story. A workflow task will apply this label.
+      placeholder: "Epic: Feature A"
+    validations:
+      required: true
+  - type: input
     id: persona
     attributes:
       label: As a ...
