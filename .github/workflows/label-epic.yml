@@ -10,6 +10,17 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
     steps:
+      - name: Verify Issue Type
+        id: type_check
+        run: |
+          issue_name="${{ github.event.issue.name }}"
+          echo "Issue type is: $issue_name"
+          if [[ $issue_name == "User Story"* ]]; then
+            echo "Issue is a User Story, proceeding with the workflow..."
+          else
+            echo "Issue is not a User Story. Skipping workflow..."
+            exit 78  # Exit with a neutral status code to indicate a skipped run
+          fi
       - name: Install gh
         run: |
           sudo apt-get install gh  # For Ubuntu-based runners
