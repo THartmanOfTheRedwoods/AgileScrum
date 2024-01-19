@@ -7,6 +7,8 @@ on:
 jobs:
   process_issue:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
     steps:
       - name: Install gh
         run: |
