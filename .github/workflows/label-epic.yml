@@ -22,10 +22,10 @@ jobs:
           epic_label=$(echo "${{ github.event.issue.body }}" | awk -v RS='###' '/Epic Label/ {gsub(/^[[:space:]]*Epic Label[[:space:]]*/, "epic:", $0); gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0); print $0}'"")
           echo "Applying Epic Label: $epic_label"
           label_search_output=$(gh label list --json name -q ".[] | .name" --search "$epic_label")
-          if [ -n "$label_search_output" ]; then
-            echo "Label already exists, so adding.";
+          if [ "$label_search_output" = "$epic_label" ]; then
+            echo "Label already exists, so skipping creation...";
           else
-            echo "Creating label";
+            echo "Creating label $epic_label";
             gh label create "$epic_label" --description "New Epic $epic_label" --color E99695
           fi
           gh issue edit ${{ github.event.issue.number }} --add-label "$epic_label"
