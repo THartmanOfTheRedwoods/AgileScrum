@@ -18,4 +18,5 @@ jobs:
       - name: Apply Epic Label
         run: |
           echo "Applying Epic Label: $epic_label"
-          gh issue add-label "${{ github.event.issue.number }}" "$epic_label"
+          gh issue add-labels --issue "${{ github.event.issue.number }}" --labels "$epic_label"
+          
