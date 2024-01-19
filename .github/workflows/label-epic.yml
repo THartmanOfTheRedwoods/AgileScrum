@@ -8,6 +8,12 @@ jobs:
   process_issue:
     runs-on: ubuntu-latest
     steps:
+      - name: Install gh
+        run: |
+          sudo apt-get install gh  # For Ubuntu-based runners
+      - name: Authenticate gh
+        run: |
+          gh auth login --with-token ${{ secrets.WORKFLOW_TOKEN }}
       - name: Get issue body
         run: |
           echo "Issue body: ${{ github.event.issue.body }}"
@@ -15,7 +21,7 @@ jobs:
         run: |
           epic_label=$(echo "${{ github.event.issue.body }}" | awk -v RS='###' '/Epic Label/ {gsub(/^[[:space:]]*Epic Label[[:space:]]*/, "epic:", $0); gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0); print $0}'"")
           echo "Epic Label: $epic_label"
-      - name: Apply Epic Label
+      - name: Add epic label
         run: |
           echo "Applying Epic Label: $epic_label"
           gh issue add-labels --issue "${{ github.event.issue.number }}" --labels "$epic_label"
