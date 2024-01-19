@@ -11,9 +11,6 @@ jobs:
       - name: Install gh
         run: |
           sudo apt-get install gh  # For Ubuntu-based runners
-      - name: Authenticate gh
-        run: |
-          gh auth login --with-token ${{ secrets.WORKFLOW_TOKEN }}
       - name: Get issue body
         run: |
           echo "Issue body: ${{ github.event.issue.body }}"
@@ -24,5 +21,5 @@ jobs:
       - name: Add epic label
         run: |
           echo "Applying Epic Label: $epic_label"
-          gh issue add-labels --issue "${{ github.event.issue.number }}" --labels "$epic_label"
+          gh issue add-labels --issue ${{ github.event.issue.number }} --labels "${epic_label}" --token ${{ secrets.WORKFLOW_TOKEN }}
           
