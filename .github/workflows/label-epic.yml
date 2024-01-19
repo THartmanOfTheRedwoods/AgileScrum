@@ -13,7 +13,7 @@ jobs:
           echo "Issue body: ${{ github.event.issue.body }}"
       - name: Extract epic label
         run: |
-          epic_label=$(awk -F'Epic Label: ' '/^Epic Label: /{print $2}' <<< "${{ github.event.issue.body }}")
+          epic_label=$(awk 'BEGIN{RS=""; FS="\n# Epic Label"} $2 ~ /[^[:space:]]/{print $2}' <<< "${{ github.event.issue.body }}")
           echo "Epic Label: $epic_label"
       - name: Add epic label
         uses: actions/github-script@v6
