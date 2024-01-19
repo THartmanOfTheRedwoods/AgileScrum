@@ -12,10 +12,11 @@ jobs:
     steps:
     - name: Check if Epic Label Provided
       id: check_label
-      run: echo "Epic Label :: ${{ github.event.issue.labels[0] }}"
+      run: echo "Epic Label :: $(grep -oP '(?<=epic_label: ).*' ${{ github.event.issue.body }} || echo "")"
+      
     - name: Apply Epic Label
       if: steps.check_label.outputs.EpicLabel
       run: |
-        epic_label="${{ github.event.issue.labels[0] }}"
+        epic_label="$(grep -oP '(?<=epic_label: ).*' ${{ github.event.issue.body }} || echo "")"
         echo "Applying Epic Label: $epic_label"
         gh issue add-label "${{ github.event.issue.number }}" "$epic_label"
