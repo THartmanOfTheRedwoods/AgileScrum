@@ -16,7 +16,7 @@ jobs:
           epic_label=$(echo "${{ github.event.issue.body }}" | awk -v RS='###' '/Epic Label/ {gsub(/^[[:space:]]*Epic Label[[:space:]]*/, "epic:", $0); gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0); print $0}'"")
           echo "Epic Label: $epic_label"
       - name: Add epic label
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
           script: |
