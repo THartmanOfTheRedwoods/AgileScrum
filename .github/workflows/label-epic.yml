@@ -1,0 +1,23 @@
+name: Label Epic
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  label-epic:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if Epic Label Provided
+      id: check_label
+      run: echo "Epic Label :: ${{ github.event.issue.labels[0].name }}"
+      
+    - name: Apply Epic Label
+      if: steps.check_label.outputs.EpicLabel
+      run: |
+        epic_label="${{ github.event.issue.labels[0].name }}"
+        echo "Applying Epic Label: $epic_label"
+        gh issue add-label "${{ github.event.issue.number }}" "$epic_label"
+
