@@ -41,3 +41,7 @@ In summary, just as stories and epics are vital in agile methodologies, initiati
 ## Student Project Focus
 
 Since we are only working on our projects for a 16 week semester, we will only be focusing on Epics, User-Stories, and Sub-Tasks for those stories.
+
+## References
+
+* [Better Scrum using GitHub](https://www.ssw.com.au/rules/rules-to-better-scrum-using-github/)
